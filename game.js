@@ -27,7 +27,7 @@ const keys = {};
 
 const drawPlayer = () => {
   if (player.alive) {
-    ctx.fillStyle = "hsl(60, 100%, 50%)";
+    ctx.fillStyle = "hsl(60, 100%, 100%)";
     ctx.fillRect(player.x, player.y, player.width, player.height);
   }
 };
@@ -72,7 +72,7 @@ function createGem() {
     y: 0,
     width: 10,
     height: 10,
-    speed: 1 + Math.random() * 2
+    speed: 1
   };
   gems.push(gem);
 }
@@ -152,21 +152,18 @@ const renderLoopLabel = () => {
 };
 
 const renderGemCount = () => {
-  ctx.fillStyle = "white";
-  ctx.font = "12px Arial";
-  ctx.fillText(`Gems: ${gemCount}`, 10, 20);
+  let gemCountElement = document.getElementById('gemCount');
+  if (!gemCountElement) {
+    gemCountElement = document.createElement('div');
+    gemCountElement.id = 'gemCount';
+    document.body.appendChild(gemCountElement);
+    gemCountElement.classList.add('gem-count');
+  }
+  gemCountElement.textContent = `Gems: ${gemCount}`;
 }
 
-/**
- * Determines whether an obstacle should be created based on the game loop count.
- *
- * @param {number} rateIncrease - A multiplier that affects the rate of obstacle creation.
- *                                Recommended values are between 1 and 100.
- *                                Higher values will decrease the frequency of obstacle creation.
- * @returns {boolean} - Returns true if an obstacle should be created, otherwise false.
- */
 function shouldCreateObstacle(rateIncrease = 1) {
-  return Math.random() < Math.max(0.02 * rateIncrease * gameLoop / 5000, 0.02)
+  return Math.random() < Math.min(Math.max(0.02 * rateIncrease * gemCount * gameLoop / 8000, 0.02), 0.2)
 }
 
 function shouldCreateGem(rateIncrease = 1) {
@@ -225,10 +222,11 @@ function createReplayButton() {
   replayButton = document.createElement('button');
   replayButton.textContent = 'Play Again';
   replayButton.style.position = 'absolute';
-  replayButton.style.left = `${canvas.offsetLeft + canvas.width / 2 - 50}px`;
-  replayButton.style.top = `${canvas.offsetTop + canvas.height / 2 + 30}px`;
-  replayButton.style.width = '100px';
+  // replayButton.style.left = `${canvas.offsetLeft + canvas.width / 2 - 50}px`;
+  replayButton.style.top = `${canvas.offsetTop + canvas.height / 2 + 70}px`;
+  replayButton.style.width = '230px';
   replayButton.style.display = 'none';
+  replayButton.classList.add('replay-button');
   document.body.appendChild(replayButton);
 
   replayButton.addEventListener('click', resetGame);
