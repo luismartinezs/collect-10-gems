@@ -1,0 +1,29 @@
+body {
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: white;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.instructions {
+  text-align: center;
+  font-size: 1.5em;
+  color: #00ff00;
+  margin-bottom: 30px;
+}
+
+canvas {
+  border: 2px solid #00ff00;
+  background-color: #000;
+  image-rendering: pixelated;
+}
+
+#gameCanvas {
+  background-color: #000;
+  box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
+}
